@@ -10,6 +10,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import picRouter from './routes/pics'
+import selectionRouter from './routes/selection'
 import { client } from './prisma/prismaClient'
 
 dotenv.config()
@@ -21,6 +22,7 @@ app.use(cors())
 app.use(json())
 app.use(morgan('tiny'))
 app.use('/pics', picRouter)
+app.use('/', selectionRouter)
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     console.error(err.stack)
@@ -30,6 +32,17 @@ app.use(errorHandler)
 
 app.listen(port, async () => {
     console.log(`[server]: Server is running on port: ${port}`)
+    try {
+        const response = await client.current.create({
+            data: {
+                id: 1,
+                picture_id: null,
+            },
+        })
+        console.log('success: current table is seeded')
+    } catch (err) {
+        console.log('error: current table is most likely already seeded')
+    }
     try {
         const response = await axios.get(
             'https://www.reddit.com/r/pics/.json?jsonp='

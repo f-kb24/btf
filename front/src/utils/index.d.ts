@@ -8,3 +8,8 @@ type Pic = {
     num_comments: number
     reso: { url: string; width: number; height: number }
 }
+
+type GetPicturesResponse = {
+    pictures: Pic[]
+    selected: string | null
+}

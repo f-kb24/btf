@@ -11,7 +11,7 @@ const base = axios.create({
 const picsApi = {
     getAllPics: async () => {
         try {
-            const response = await base.get<Pic[]>('pics/getall')
+            const response = await base.get<GetPicturesResponse>('pics/getall')
             return response.data
         } catch (err) {
             console.log(err)
@@ -19,4 +19,15 @@ const picsApi = {
     },
 }
 
-export default picsApi
+const selectionApi = {
+    saveSelection: async (picture_id: string) => {
+        try {
+            const response = await base.post('/selection', { picture_id })
+            return response.data
+        } catch (err) {
+            console.log(err)
+        }
+    },
+}
+
+export { picsApi, selectionApi }
