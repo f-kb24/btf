@@ -53,7 +53,7 @@ const App: React.FC = () => {
             </Left>
             <Right>
                 {!selectedPic ? (
-                    <SelectDiv>Select a Picture</SelectDiv>
+                    <SelectDiv data-testid="select">Select a Picture</SelectDiv>
                 ) : (
                     <>
                         <div data-testid="test-title">

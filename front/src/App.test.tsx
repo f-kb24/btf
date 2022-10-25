@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import App from './App'
 
-test('fetches mock data and tests components', async () => {
+test('fetches mock data and click twice on element', async () => {
     const { getByTestId } = render(<App />)
 
     await waitFor(() => {
@@ -17,6 +17,9 @@ test('fetches mock data and tests components', async () => {
         expect(titleElement).toHaveTextContent(/real life consequences/i)
         expect(authorElement).toHaveTextContent(/crushmycamel/i)
         expect(numCommentsElement).toHaveTextContent('1512')
+        fireEvent.click(button)
+        const selectElement = getByTestId('select')
+        expect(selectElement).toHaveTextContent(/select/i)
     })
 })
 
