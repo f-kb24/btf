@@ -20,7 +20,7 @@ const picsApi = {
 }
 
 const selectionApi = {
-    saveSelection: async (picture_id: string) => {
+    saveSelection: async (picture_id: string | null) => {
         try {
             const response = await base.post('/selection', { picture_id })
             return response.data

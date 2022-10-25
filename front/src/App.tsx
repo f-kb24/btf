@@ -23,12 +23,12 @@ const App: React.FC = () => {
     }, [])
 
     const setSelected = async (picture: Pic) => {
-        const response = await selectionApi.saveSelection(picture.id)
-        console.log(response)
         if (selectedPic?.id === picture.id) {
             setSelectedPic(null)
+            await selectionApi.saveSelection(null)
         } else {
             setSelectedPic(picture)
+            await selectionApi.saveSelection(picture.id)
         }
     }
 
@@ -36,7 +36,11 @@ const App: React.FC = () => {
         <Container>
             <Left>
                 {pics.map((pic) => (
-                    <Element key={pic.id} onClick={() => setSelected(pic)}>
+                    <Element
+                        data-testid={pic.id === 'yccwhh' ? 'click-testing' : ''}
+                        key={pic.id}
+                        onClick={() => setSelected(pic)}
+                    >
                         <div>{pic.score}</div>
                         {pic.thumbnail === 'nsfw' ? (
                             <div>Picture is NSFW</div>
@@ -52,12 +56,24 @@ const App: React.FC = () => {
                     <SelectDiv>Select a Picture</SelectDiv>
                 ) : (
                     <>
-                        <div>Title:{selectedPic.title}</div>
-                        <img src={selectedPic.thumbnail} />
+                        <div data-testid="test-title">
+                            Title:{selectedPic.title}
+                        </div>
+                        {selectedPic.thumbnail === 'nsfw' ? (
+                            <img src={selectedPic.thumbnail} />
+                        ) : (
+                            <div>Image is NSFW</div>
+                        )}
                         <div>URL:{selectedPic.url}</div>
-                        <div>score:{selectedPic.score}</div>
-                        <div>author:{selectedPic.author}</div>
-                        <div>number of comments:{selectedPic.num_comments}</div>
+                        <div data-testid="test-score">
+                            score:{selectedPic.score}
+                        </div>
+                        <div data-testid="test-author">
+                            author:{selectedPic.author}
+                        </div>
+                        <div data-testid="test-num-comments">
+                            number of comments:{selectedPic.num_comments}
+                        </div>
                     </>
                 )}
             </Right>
