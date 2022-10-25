@@ -8,10 +8,10 @@ const base = axios.create({
     },
 })
 
-const authAPI = {
-    createUser: async (formData: any) => {
+const picsApi = {
+    getAllPics: async () => {
         try {
-            const response = await base.post('route/hello/1', formData)
+            const response = await base.get<Pic[]>('pics/getall')
             return response.data
         } catch (err) {
             console.log(err)
@@ -19,4 +19,4 @@ const authAPI = {
     },
 }
 
-export default authAPI
+export default picsApi

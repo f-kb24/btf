@@ -93,12 +93,14 @@ app.listen(port, async () => {
                             reso: selectedResolution,
                         },
                     })
-                    console.log(response)
+                    console.log(
+                        `Success: Pic ID: ${id} has been inserted into db`
+                    )
                 } catch (err) {
                     // most likely a unique id error if db has already been filled
                     // if typeof error = PrismaClientRequestError
                     console.log(
-                        `Pic ID: ${id} unable to insert into db: most likely a unique foreign key error`
+                        `Error: Pic ID: ${id} is most likely already in DB`
                     )
                 }
             }
