@@ -60,9 +60,9 @@ const App: React.FC = () => {
                             Title:{selectedPic.title}
                         </div>
                         {selectedPic.thumbnail === 'nsfw' ? (
-                            <img src={selectedPic.thumbnail} />
-                        ) : (
                             <div>Image is NSFW</div>
+                        ) : (
+                            <img src={selectedPic.thumbnail} />
                         )}
                         <div>URL:{selectedPic.url}</div>
                         <div data-testid="test-score">
