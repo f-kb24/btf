@@ -64,7 +64,12 @@ const App: React.FC = () => {
                         ) : (
                             <img src={selectedPic.thumbnail} />
                         )}
-                        <div>URL:{selectedPic.url}</div>
+                        <div>
+                            URL:
+                            <a href={selectedPic.url} target="_blank">
+                                {selectedPic.url}
+                            </a>
+                        </div>
                         <div data-testid="test-score">
                             score:{selectedPic.score}
                         </div>
