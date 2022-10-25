@@ -5,22 +5,25 @@ import App from './App'
 test('fetches mock data and click twice on element', async () => {
     const { getByTestId } = render(<App />)
 
-    await waitFor(() => {
-        const button = getByTestId('click-testing')
-        fireEvent.click(button)
-        const scoreElement = getByTestId('test-score')
-        const titleElement = getByTestId('test-title')
-        const authorElement = getByTestId('test-author')
-        const numCommentsElement = getByTestId('test-num-comments')
+    await waitFor(
+        () => {
+            const button = getByTestId('click-testing')
+            fireEvent.click(button)
+            const scoreElement = getByTestId('test-score')
+            const titleElement = getByTestId('test-title')
+            const authorElement = getByTestId('test-author')
+            const numCommentsElement = getByTestId('test-num-comments')
 
-        expect(scoreElement).toHaveTextContent('50589')
-        expect(titleElement).toHaveTextContent(/real life consequences/i)
-        expect(authorElement).toHaveTextContent(/crushmycamel/i)
-        expect(numCommentsElement).toHaveTextContent('1512')
-        fireEvent.click(button)
-        const selectElement = getByTestId('select')
-        expect(selectElement).toHaveTextContent(/select/i)
-    })
+            expect(scoreElement).toHaveTextContent('50589')
+            expect(titleElement).toHaveTextContent(/real life consequences/i)
+            expect(authorElement).toHaveTextContent(/crushmycamel/i)
+            expect(numCommentsElement).toHaveTextContent('1512')
+            fireEvent.click(button)
+            const selectElement = getByTestId('select')
+            expect(selectElement).toHaveTextContent(/select/i)
+        },
+        { timeout: 5000 }
+    )
 })
 
 // {
