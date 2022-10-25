@@ -9,7 +9,8 @@ import axios from 'axios'
 import morgan from 'morgan'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import testRouter from './routes/testroute'
+import picRouter from './routes/pics'
+import { client } from './prisma/prismaClient'
 
 dotenv.config()
 
@@ -19,7 +20,7 @@ const port = process.env.PORT
 app.use(cors())
 app.use(json())
 app.use(morgan('tiny'))
-app.use('/route', testRouter)
+app.use('/pics', picRouter)
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     console.error(err.stack)
@@ -33,7 +34,7 @@ app.listen(port, async () => {
         const response = await axios.get(
             'https://www.reddit.com/r/pics/.json?jsonp='
         )
-        response.data.data.children.forEach((child: any) => {
+        response.data.data.children.forEach(async (child: any) => {
             const {
                 thumbnail,
                 score,
@@ -79,17 +80,27 @@ app.listen(port, async () => {
                         }
                     }
                 )
-
-                console.log(
-                    thumbnail,
-                    score,
-                    title,
-                    id,
-                    author,
-                    url,
-                    num_comments,
-                    selectedResolution
-                )
+                try {
+                    const response = await client.pics.create({
+                        data: {
+                            thumbnail,
+                            score,
+                            title,
+                            id,
+                            author,
+                            url,
+                            num_comments,
+                            reso: selectedResolution,
+                        },
+                    })
+                    console.log(response)
+                } catch (err) {
+                    // most likely a unique id error if db has already been filled
+                    // if typeof error = PrismaClientRequestError
+                    console.log(
+                        `Pic ID: ${id} unable to insert into db: most likely a unique foreign key error`
+                    )
+                }
             }
         })
     } catch (err) {
