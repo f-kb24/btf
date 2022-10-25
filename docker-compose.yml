@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+    database:
+      image: postgres:14.4
+      restart: always
+      volumes: 
+        - ./db_data:/var/lib/postgresql/db_data
+      environment:
+        - PGPORT=9100
+        - PGUSER=postgres
+        - POSTGRES_PASSWORD=password
+        - POSTGRES_DB=default
+      ports:
+        - 9100:9100
