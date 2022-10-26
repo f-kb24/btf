@@ -140,7 +140,7 @@ app.listen(port, async () => {
                     // most likely a unique id error if db has already been filled
                     // if typeof error = PrismaClientRequestError
                     console.log(
-                        `Error: Pic ID: ${id} is most likely already in DB`
+                        `Error: Pic ID: ${id} cannot be inserted or updated`
                     )
                 }
             }
