@@ -11,5 +11,5 @@ type Pic = {
 
 type GetPicturesResponse = {
     pictures: Pic[]
-    selected: string | null
+    selected: null | Pic
 }

@@ -11,13 +11,16 @@ const App: React.FC = () => {
         ;(async () => {
             const response = await picsApi.getAllPics()
             response && setPics(response.pictures)
+            console.log(response?.selected)
+            response?.selected && setSelectedPic(response.selected)
             if (response?.selected) {
-                const picture = response.pictures.filter((pic) => {
-                    return pic.id === response.selected
-                })[0]
-                if (picture) {
-                    setSelectedPic(picture)
-                }
+                setSelectedPic(response.selected)
+                // const picture = response.pictures.filter((pic) => {
+                //     return pic.id === response.selected
+                // })[0]
+                // if (picture) {
+                //     setSelectedPic(picture)
+                // }
             }
         })()
     }, [])
