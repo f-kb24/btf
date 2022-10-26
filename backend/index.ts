@@ -94,21 +94,48 @@ app.listen(port, async () => {
                     }
                 )
                 try {
-                    const response = await client.pics.create({
-                        data: {
-                            thumbnail,
-                            score,
-                            title,
+                    const pic = await client.pics.findUnique({
+                        where: {
                             id,
-                            author,
-                            url,
-                            num_comments,
-                            reso: selectedResolution,
                         },
                     })
-                    console.log(
-                        `Success: Pic ID: ${id} has been inserted into db`
-                    )
+
+                    if (!pic) {
+                        await client.pics.create({
+                            data: {
+                                thumbnail,
+                                score,
+                                title,
+                                id,
+                                author,
+                                url,
+                                num_comments,
+                                reso: selectedResolution,
+                            },
+                        })
+                        console.log(
+                            `Success: Pic ID: ${id} has been inserted into db`
+                        )
+                    } else {
+                        await client.pics.update({
+                            where: {
+                                id,
+                            },
+                            data: {
+                                thumbnail,
+                                score,
+                                title,
+                                id,
+                                author,
+                                url,
+                                num_comments,
+                                reso: selectedResolution,
+                            },
+                        })
+                        console.log(
+                            `Success: Pic ID: ${id} has been updated into db`
+                        )
+                    }
                 } catch (err) {
                     // most likely a unique id error if db has already been filled
                     // if typeof error = PrismaClientRequestError

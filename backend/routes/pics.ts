@@ -6,7 +6,14 @@ const picRouter = express.Router()
 
 picRouter.route('/getall').get(async (req, res, next) => {
     try {
-        const pics = await client.pics.findMany()
+        const pics = await client.pics.findMany({
+            orderBy: [
+                {
+                    score: 'desc',
+                },
+            ],
+            take: 20,
+        })
         const selectedPic = await client.current.findUnique({
             where: {
                 id: 1,
@@ -17,10 +24,10 @@ picRouter.route('/getall').get(async (req, res, next) => {
         } else {
             // return 20 pictures sorted by score
             // also return if there's a selected picture
-            pics.sort((a: Pics, b: Pics) => b.score - a.score)
-            const slicedPics = pics.slice(0, 20)
+            // pics.sort((a: Pics, b: Pics) => b.score - a.score)
+            // const slicedPics = pics.slice(0, 20)
             res.json({
-                pictures: slicedPics,
+                pictures: pics,
                 selected: selectedPic?.picture_id,
             })
         }
