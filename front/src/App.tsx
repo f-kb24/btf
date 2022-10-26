@@ -100,6 +100,8 @@ const Left = styled.div`
     display: flex;
     flex-direction: column;
     max-width: 300px;
+    overflow-y: scroll;
+    height: 100vh;
 `
 const Right = styled.div`
     display: flex;
