@@ -15,12 +15,6 @@ const App: React.FC = () => {
             response?.selected && setSelectedPic(response.selected)
             if (response?.selected) {
                 setSelectedPic(response.selected)
-                // const picture = response.pictures.filter((pic) => {
-                //     return pic.id === response.selected
-                // })[0]
-                // if (picture) {
-                //     setSelectedPic(picture)
-                // }
             }
         })()
     }, [])
