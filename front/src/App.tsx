@@ -4,18 +4,13 @@ import { picsApi, selectionApi } from 'utils/api'
 
 const App: React.FC = () => {
     const [pics, setPics] = useState<Pic[]>([])
-
     const [selectedPic, setSelectedPic] = useState<Pic | null>(null)
 
     useEffect(() => {
         ;(async () => {
             const response = await picsApi.getAllPics()
             response && setPics(response.pictures)
-            console.log(response?.selected)
             response?.selected && setSelectedPic(response.selected)
-            if (response?.selected) {
-                setSelectedPic(response.selected)
-            }
         })()
     }, [])
 
@@ -29,6 +24,11 @@ const App: React.FC = () => {
         }
     }
 
+    const getPicture = async (id: string) => {
+        const response = await picsApi.getPicture(id)
+        setSelected(response)
+    }
+
     return (
         <Container>
             <Left>
@@ -36,7 +36,7 @@ const App: React.FC = () => {
                     <Element
                         data-testid={pic.id === 'yccwhh' ? 'click-testing' : ''}
                         key={pic.id}
-                        onClick={() => setSelected(pic)}
+                        onClick={() => getPicture(pic.id)}
                     >
                         <div>{pic.score}</div>
                         {pic.thumbnail === 'nsfw' ? (

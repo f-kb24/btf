@@ -29,8 +29,6 @@ picRouter.route('/getall').get(async (req, res, next) => {
         if (!pics) {
             next(new Error('pictures unavailable'))
         } else {
-            // return 20 pictures sorted by score
-            // also return if there's a selected picture
             res.json({
                 pictures: pics,
                 selected: pic,
@@ -38,6 +36,18 @@ picRouter.route('/getall').get(async (req, res, next) => {
         }
     } catch (err) {
         next(err)
+    }
+})
+
+picRouter.route('/:id').get(async (req, res, next) => {
+    const id = req.params.id
+    const picture = await client.pics.findUnique({
+        where: { id },
+    })
+    if (!picture) {
+        res.status(404).json({ msg: `no picture associated with id: ${id}` })
+    } else {
+        res.json(picture)
     }
 })
 

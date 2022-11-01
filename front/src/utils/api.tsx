@@ -17,6 +17,14 @@ const picsApi = {
             console.log(err)
         }
     },
+    getPicture: async (id: string) => {
+        try {
+            const response = await base.get(`pics/${id}`)
+            return response.data
+        } catch (err) {
+            console.log(err)
+        }
+    },
 }
 
 const selectionApi = {
